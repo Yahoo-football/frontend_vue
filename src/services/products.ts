@@ -12,8 +12,8 @@ export interface Product {
   is_active?: boolean
 }
 
-export async function fetchProducts() {
-  const { data } = await api.get('/products')
+export async function fetchProducts(params?: { search?: string }) {
+  const { data } = await api.get('/products', { params })
   return Array.isArray(data?.data) ? data.data : data
 }
 

@@ -4,9 +4,11 @@ import { useRoute, useRouter } from 'vue-router'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { addToCart } from '@/services/cart'
 import { fetchProduct, type Product } from '@/services/products'
+import { useWishlistStore } from '@/stores/wishlist'
 
 const route = useRoute()
 const router = useRouter()
+const wishlist = useWishlistStore()
 
 const product = ref<Product | null>(null)
 const loading = ref(true)
@@ -111,6 +113,19 @@ async function handleAddToCart() {
             @click="handleAddToCart"
           >
             {{ adding ? 'Adding...' : 'Add to Cart' }}
+          </button>
+
+          <!-- WISHLIST HEART BUTTON -->
+          <button
+            class="btn wishlist-btn"
+            :class="{ 'is-active': wishlist.isWishlisted(product.id) }"
+            @click="wishlist.toggle(product.id)"
+            title="Toggle Watchlist"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="heart-svg">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            {{ wishlist.isWishlisted(product.id) ? 'In Watchlist' : 'Add to Watchlist' }}
           </button>
 
           <RouterLink class="btn secondary" to="/products">
@@ -225,6 +240,44 @@ async function handleAddToCart() {
   background: #eee;
   color: #333;
   text-decoration: none;
+}
+
+/* WISHLIST BUTTON */
+.wishlist-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.wishlist-btn:hover {
+  background: #e2e8f0;
+  color: #334155;
+  border-color: #94a3b8;
+}
+
+.wishlist-btn.is-active {
+  background: #fff1f2;
+  color: #e11d48;
+  border-color: #fca5a5;
+}
+
+.heart-svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: all 0.2s ease;
+}
+
+.wishlist-btn.is-active .heart-svg {
+  fill: #e11d48;
+  stroke: #e11d48;
 }
 
 .msg {

@@ -56,6 +56,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  function updateUser(nextUser: AuthUser) {
+    user.value = nextUser
+  }
+
   return {
     token,
     user,
@@ -65,5 +69,6 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     register,
     logout,
+    updateUser,
   }
 })

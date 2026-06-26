@@ -7,6 +7,8 @@ import ProductsView from '@/views/ProductsView.vue'
 import ProductDetailView from '@/views/ProductDetailView.vue'
 import CartView from '@/views/CartView.vue'
 import OrdersView from '@/views/OrdersView.vue'
+import WishlistView from '@/views/WishlistView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +20,8 @@ const router = createRouter({
     { path: '/products/:id', name: 'product-detail', component: ProductDetailView, meta: { requiresAuth: true }, props: true },
     { path: '/cart', name: 'cart', component: CartView, meta: { requiresAuth: true } },
     { path: '/orders', name: 'orders', component: OrdersView, meta: { requiresAuth: true } },
+    { path: '/wishlist', name: 'wishlist', component: WishlistView, meta: { requiresAuth: true } },
+    { path: '/profile', name: 'profile', component: ProfileView, meta: { requiresAuth: true } },
   ],
   scrollBehavior() {
     return { top: 0 }
